@@ -7,14 +7,12 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue'
+import { ref } from 'vue'
 import { ElConfigProvider } from 'element-plus'
 
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
-const props = defineProps({ locale: zhCn })
-
-const locale = ref(props.locale)
+const locale = ref(zhCn)
 </script>
 
 <style scoped></style>
