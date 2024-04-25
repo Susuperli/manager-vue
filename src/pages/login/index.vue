@@ -1,3 +1,7 @@
-<template>login</template>
+<template>
+  <el-button>我是button</el-button>
+</template>
 
-<script></script>
+<script setup>
+import { ElButton } from 'element-plus'
+</script>

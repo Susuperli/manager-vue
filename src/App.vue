@@ -1,10 +1,20 @@
-<script setup>
-// import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <RouterView />
+  <RouterView>
+    <el-config-provider :locale="locale.value">
+      <el-button type="primary">按钮</el-button>
+    </el-config-provider>
+  </RouterView>
 </template>
+
+<script setup>
+import { defineProps, ref } from 'vue'
+import { ElConfigProvider } from 'element-plus'
+
+import zhCn from 'element-plus/lib/locale/lang/zh-cn'
+
+const props = defineProps({ locale: zhCn })
+
+const locale = ref(props.locale)
+</script>
 
 <style scoped></style>
