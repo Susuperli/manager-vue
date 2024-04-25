@@ -1,9 +1,7 @@
 <template>
-  <RouterView>
-    <el-config-provider :locale="props.locale">
-      <el-button type="primary">按钮</el-button>
-    </el-config-provider>
-  </RouterView>
+  <el-config-provider :locale="props.locale">
+    <RouterView />
+  </el-config-provider>
 </template>
 
 <script setup>
