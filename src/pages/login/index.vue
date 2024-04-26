@@ -3,12 +3,12 @@
     <div class="login-box">
       <el-form label-width="80px" :model="ruleForm">
         <el-form-item label="用户名">
-          <el-input v-model="ruleForm.username" placeholder="Username"></el-input>
+          <el-input v-model="ruleForm.username" placeholder="请输入用户名"></el-input>
         </el-form-item>
         <el-form-item label="密码">
           <el-input
             v-model="ruleForm.password"
-            placeholder="Password"
+            placeholder="请输入密码"
             type="password"
             show-password
           >
