@@ -14,8 +14,6 @@ router.post('/login', async (req, res) => {
   const { username, password } = req.body
   const loginMap = fileRelate.getFileContent('login.json')
 
-  console.log('loginMap', loginMap[username])
-
   const userPassword = loginMap?.[username]?.password
 
   const result = {
@@ -36,15 +34,13 @@ router.post('/login', async (req, res) => {
       //   设置一些cookie
       result.data.access_token = token
       // 写入token
-      const res = writeToken(username, token)
+      writeToken(username, token)
     } else {
       result.msg = '账号或者密码错误，请重新输入'
     }
   } else {
     result.data.success = false
   }
-
-  await sleep(2000)
 
   res.send(result)
 })

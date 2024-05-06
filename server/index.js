@@ -40,15 +40,12 @@ app.use(async (req, res, next) => {
   next()
 })
 
-app.use(async (req, res, next) => {
-  if (req.path === '/api/register') {
-    res.send({
-      code: 200,
-      msg: '注册成功',
-      data: { success: true }
-    })
-  }
-
+// 路由请求超时的中间件
+app.use(function (req, res, next) {
+  res.setTimeout(12 * 1000, function () {
+    console.log('Request has timed out.')
+    return res.status(408).send('请求超时')
+  })
   next()
 })
 

@@ -12,9 +12,6 @@ function getToken(username) {
   if (token && jsonWebToken.decode(token).exp > Date.now()) {
     return token
   }
-  if (token) {
-    return token
-  }
 
   return jsonWebToken.sign(
     {
