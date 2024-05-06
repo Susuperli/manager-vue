@@ -1,22 +1,40 @@
 <template>
   <div class="container">
     <div class="login-box">
-      <el-form label-width="80px" :model="ruleForm">
-        <el-form-item label="用户名">
-          <el-input v-model="ruleForm.username" placeholder="请输入用户名"></el-input>
+      <el-form
+        label-width="80px"
+        :model="ruleForm"
+        :rules="rules"
+        ref="formInstant"
+        hide-required-asterisk
+      >
+        <el-form-item label="用户名" prop="username">
+          <el-input
+            v-model="ruleForm.username"
+            placeholder="请输入用户名"
+            autocomplete="off"
+          ></el-input>
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input
             v-model="ruleForm.password"
             placeholder="请输入密码"
             type="password"
             show-password
+            name="password"
           >
+            >
           </el-input>
         </el-form-item>
         <el-form-item>
           <div class="btn-box">
-            <el-button type="primary" @click="login" class="login-btn">登录</el-button>
+            <el-button
+              type="primary"
+              @click="login(formInstant)"
+              class="login-btn"
+              :loading="loading"
+              >登录</el-button
+            >
           </div>
         </el-form-item>
         <el-form-item>
@@ -28,19 +46,64 @@
       </el-form>
     </div>
   </div>
+  <div>
+    <el-dialog v-model="dialogVisible" title="Waring" center width="400">
+      <div class="dialog-text">{{ dialogText }}</div>
+    </el-dialog>
+  </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import { usePost, useGet } from '@/request'
+
+const formInstant = ref()
+const loading = ref(false)
+const dialogVisible = ref(false)
+const dialogText = ref('登录失败')
 
 const ruleForm = reactive({
   username: '',
   password: ''
 })
 
-const login = () => {
-  // @TODO 登录逻辑
-  console.log('ruleForm', ruleForm)
+const rules = reactive({
+  username: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 10, message: '用户名长度需要在 3 到 10 个字符', trigger: 'blur' }
+  ],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
+})
+
+const login = async (formInstant) => {
+  if (!formInstant) return
+
+  formInstant.validate(async (valid) => {
+    if (valid) {
+      loading.value = true
+      const res = await usePost('/login', {
+        data: ruleForm
+      })
+      loading.value = false
+
+      const data = res.data.value
+
+      if (data.data.success) {
+        const { data: _data } = data
+        // 存储token
+        localStorage.setItem('access_token', _data.access_token)
+
+        // 执行跳转逻辑
+        console.log('data', _data)
+      } else {
+        dialogVisible.value = true
+        dialogText.value = data.msg
+      }
+    }
+  })
+}
+const register = async () => {
+  const res = await useGet('/api/register')
 }
 </script>
 
@@ -81,6 +144,9 @@ const login = () => {
       display: flex;
       justify-content: space-between;
     }
+  }
+  .dialog-text {
+    text-align: center;
   }
 }
 </style>
