@@ -1,4 +1,5 @@
 const fs = require('fs')
+const path = require('path')
 
 const fileRelate = {
   // 获取文件路径
@@ -7,16 +8,17 @@ const fileRelate = {
   },
   // 获取文件内容
   getFileContent: (fileName) => {
-    return fs.readFileSync(fileRelate.getFilePath(fileName), 'utf-8')
+    const content = fs.readFileSync(fileRelate.getFilePath(fileName), 'utf-8')
+
+    return JSON.parse(content)
   },
   // 写入文件内容
-  writeFileContent: (fileName, content) => {
-    fs.writeFileSync(fileRelate.getFilePath(fileName), content)
-    return true
-  }
-}
+  writeFileContent: (fileName, _content) => {
+    let content = typeof _content === 'string' ? _content : JSON.stringify(_content)
 
-module.exports = {
+    fs.writeFileSync(fileRelate.getFilePath(fileName), content, 'utf-8')
+    return true
+  },
   // 读取文件中某个对象
   getFileObject: (fileName, key) => {
     let content = fileRelate.getFileContent(fileName)
@@ -31,4 +33,17 @@ module.exports = {
 
     writeFileContent(fileName, JSON.stringify(obj))
   }
+}
+
+const writeToken = (username, token) => {
+  const content = fileRelate.getFileContent('token.json')
+  content[username] = token
+  fileRelate.writeFileContent('token.json', content)
+
+  return content
+}
+
+module.exports = {
+  fileRelate,
+  writeToken
 }

@@ -1,5 +1,5 @@
-const loginList = {}
+const loginMap = {}
 
 module.exports = {
-  loginList
+  loginMap
 }
