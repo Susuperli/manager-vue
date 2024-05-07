@@ -25,6 +25,9 @@ router.post('/login', async (req, res) => {
     }
   }
 
+  // 模拟延迟
+  await sleep(2000)
+
   if (userPassword) {
     if (userPassword === password) {
       result.msg = '登录成功'

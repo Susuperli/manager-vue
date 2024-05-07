@@ -40,27 +40,25 @@
         <el-form-item>
           <div class="tips">
             <span class="register btn" @click="register">注册</span>
-            <span class="btn">忘记密码</span>
+            <span class="btn" @click="forget">忘记密码</span>
           </div>
         </el-form-item>
       </el-form>
     </div>
   </div>
-  <div>
-    <el-dialog v-model="dialogVisible" title="Waring" center width="400">
-      <div class="dialog-text">{{ dialogText }}</div>
-    </el-dialog>
-  </div>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
-import { usePost, useGet } from '@/request'
+import { useRouter } from 'vue-router'
+import { ElMessage } from 'element-plus'
+
+import { usePost } from '@/request'
 
 const formInstant = ref()
 const loading = ref(false)
-const dialogVisible = ref(false)
-const dialogText = ref('登录失败')
+
+const router = useRouter()
 
 const ruleForm = reactive({
   username: '',
@@ -95,15 +93,27 @@ const login = async (formInstant) => {
 
         // 执行跳转逻辑
         console.log('data', _data)
+        ElMessage({
+          message: data.msg,
+          type: 'success'
+        })
       } else {
-        dialogVisible.value = true
-        dialogText.value = data.msg
+        ElMessage({
+          message: data.msg,
+          type: 'error'
+        })
       }
     }
   })
 }
 const register = async () => {
-  const res = await useGet('/api/register')
+  router.push('/register')
+}
+const forget = async () => {
+  ElMessage({
+    message: '暂未开发，忘记了就重新注册吧！',
+    type: 'warning'
+  })
 }
 </script>
 
