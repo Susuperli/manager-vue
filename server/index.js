@@ -30,6 +30,7 @@ app.use(verifyTokenMiddleware())
 // 路由请求超时的中间件
 app.use(timeoutMiddleware())
 
+// 路由
 app.use(router)
 
 app.listen(port, () => {

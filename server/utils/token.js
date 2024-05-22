@@ -13,6 +13,7 @@ function getToken(username) {
     return token
   }
 
+  // 重新生成token
   return jsonWebToken.sign(
     {
       data: {
@@ -21,7 +22,7 @@ function getToken(username) {
     },
     TOKEN_KEY,
     {
-      expiresIn: 60
+      expiresIn: 60 * 24 * 7
     }
   )
 }
@@ -48,5 +49,6 @@ function tokenInfo() {
 
 module.exports = {
   getToken,
-  verifyToken
+  verifyToken,
+  tokenInfo
 }
