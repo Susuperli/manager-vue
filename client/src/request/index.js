@@ -30,6 +30,7 @@ const useCommonFetch = (url, options) => {
 }
 
 export const useGet = (url, options) => useCommonFetch(url, { ...options, method: 'GET' })
-export const usePost = (url, options) => useCommonFetch(url, { ...options, method: 'POST' })
+export const usePost = (url, data, options) =>
+  useCommonFetch(url, { ...options, data, method: 'POST' })
 
 export default useCommonFetch

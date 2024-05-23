@@ -66,7 +66,7 @@
 
         <div class="desc control-margin">
           已有账号，立即
-          <el-link type="primary" @click="loginClick">登录</el-link>
+          <el-link type="primary" @click="goToLogin">登录</el-link>
         </div>
       </el-form>
     </div>
@@ -77,6 +77,8 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
+
+import { usePost } from '@/request'
 
 const formInstant = ref(null)
 
@@ -95,23 +97,54 @@ const rules = reactive({
   ],
   nickname: [
     { required: true, message: '请输入昵称' },
-    { min: 3, max: 10, message: '昵称长度需要在 3 到 10 个字符', trigger: 'blur' }
+    { min: 2, max: 10, message: '昵称长度需要在 2 到 10 个字符', trigger: 'blur' }
   ],
-  password: [{ required: true, message: '请输入密码' }],
+  password: [
+    { required: true, message: '请输入密码' },
+    { min: 6, max: 12, message: '密码长度需要在 6 到 12 个字符', trigger: 'blur' }
+  ],
   ensurePassword: [
     {
       required: true,
       message: '请确认输入密码',
+      trigger: 'blur'
+    },
+    {
+      validator: (_, value, callback) => {
+        if (value !== registerForm.password) {
+          callback(new Error('两次密码不一致'))
+        } else {
+          callback()
+        }
+      },
       trigger: 'blur'
     }
   ]
 })
 
 const register = (instant) => {
-  // todo
-  instant.validate(async (valid, fields) => {
-    console.log({ valid, fields })
+  instant.validate(async (valid) => {
     if (valid) {
+      const res = await usePost('/register', {
+        username: registerForm.username,
+        password: registerForm.password,
+        nickname: registerForm.nickname
+      })
+
+      const { data, success, msg } = res.data.value
+
+      if (success && data.success) {
+        ElMessage({
+          type: 'success',
+          message: '注册成功'
+        })
+        goToLogin()
+      } else {
+        ElMessage({
+          type: 'error',
+          message: msg
+        })
+      }
     }
   })
 }
@@ -123,7 +156,7 @@ const protocolClick = () => {
   })
 }
 
-const loginClick = () => router.push('/login')
+const goToLogin = () => router.push('/login')
 </script>
 
 <style scoped>

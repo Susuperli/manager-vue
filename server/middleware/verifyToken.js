@@ -1,8 +1,9 @@
 const { verifyToken } = require('./../utils')
+const { jumpTokenList } = require('./../constance')
 
 const verifyTokenMiddleware = () => {
   return (req, res, next) => {
-    if (req.path !== '/login') {
+    if (!jumpTokenList.includes(req.path)) {
       const token = req.headers.authorization
       const isValid = verifyToken(token ?? '')
 

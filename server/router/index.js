@@ -13,7 +13,6 @@ router.post('/login', async (req, res) => {
   // 获取登录信息
   const { username, password } = req.body
   const loginMap = fileRelate.getFileContent('login.json')
-
   const userPassword = loginMap?.[username]?.password
 
   const result = {
@@ -44,6 +43,40 @@ router.post('/login', async (req, res) => {
   } else {
     result.data.success = false
   }
+
+  res.send(result)
+})
+
+// 注册
+router.post('/register', async (req, res) => {
+  const { username, password, nickname } = req.body
+  const loginMap = fileRelate.getFileContent('login.json')
+  const user = loginMap?.[username]
+
+  const result = {
+    success: true,
+    code: 200,
+    msg: '注册成功',
+    data: {
+      success: true
+    }
+  }
+
+  if (user) {
+    result.msg = '用户名已存在'
+    result.data.success = false
+  } else {
+    fileRelate.writeFileContentAsync('login.json', {
+      ...loginMap,
+      [username]: {
+        username,
+        password,
+        nickname
+      }
+    })
+  }
+
+  await sleep(1000)
 
   res.send(result)
 })

@@ -8,9 +8,13 @@ const fileRelate = {
   },
   // 获取文件内容
   getFileContent: (fileName) => {
-    const content = fs.readFileSync(fileRelate.getFilePath(fileName), 'utf-8')
+    try {
+      const content = fs.readFileSync(fileRelate.getFilePath(fileName), 'utf-8')
 
-    return JSON.parse(content)
+      return JSON.parse(content)
+    } catch (e) {
+      console.log(e)
+    }
   },
   // 写入文件内容
   writeFileContent: (fileName, _content) => {

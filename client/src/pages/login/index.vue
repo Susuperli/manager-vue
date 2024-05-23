@@ -79,9 +79,7 @@ const login = async (formInstant) => {
   formInstant.validate(async (valid) => {
     if (valid) {
       loading.value = true
-      const res = await usePost('/login', {
-        data: ruleForm
-      })
+      const res = await usePost('/login', ruleForm)
       loading.value = false
 
       const data = res.data.value
@@ -92,7 +90,6 @@ const login = async (formInstant) => {
         localStorage.setItem('access_token', _data.access_token)
 
         // 执行跳转逻辑
-        console.log('data', _data)
         ElMessage({
           message: data.msg,
           type: 'success'
