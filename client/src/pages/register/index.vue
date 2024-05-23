@@ -81,6 +81,7 @@ import { ElMessage } from 'element-plus'
 import { usePost } from '@/request'
 
 const formInstant = ref(null)
+const loading = ref(false)
 
 const router = useRouter()
 
@@ -125,11 +126,13 @@ const rules = reactive({
 const register = (instant) => {
   instant.validate(async (valid) => {
     if (valid) {
+      loading.value = true
       const res = await usePost('/register', {
         username: registerForm.username,
         password: registerForm.password,
         nickname: registerForm.nickname
       })
+      loading.value = false
 
       const { data, success, msg } = res.data.value
 

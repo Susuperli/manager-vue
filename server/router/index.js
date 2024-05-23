@@ -62,6 +62,8 @@ router.post('/register', async (req, res) => {
     }
   }
 
+  await sleep(1000)
+
   if (user) {
     result.msg = '用户名已存在'
     result.data.success = false
@@ -75,8 +77,6 @@ router.post('/register', async (req, res) => {
       }
     })
   }
-
-  await sleep(1000)
 
   res.send(result)
 })
