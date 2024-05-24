@@ -127,26 +127,21 @@ const register = (instant) => {
   instant.validate(async (valid) => {
     if (valid) {
       loading.value = true
-      const res = await usePost('/register', {
+      const { data: refData } = await usePost('/register', {
         username: registerForm.username,
         password: registerForm.password,
         nickname: registerForm.nickname
       })
       loading.value = false
 
-      const { data, success, msg } = res.data.value
+      const { success } = refData.value
 
-      if (success && data.success) {
+      if (success) {
         ElMessage({
           type: 'success',
           message: '注册成功'
         })
         goToLogin()
-      } else {
-        ElMessage({
-          type: 'error',
-          message: msg
-        })
       }
     }
   })
