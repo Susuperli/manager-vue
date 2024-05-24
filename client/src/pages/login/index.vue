@@ -79,26 +79,21 @@ const login = async (formInstant) => {
   formInstant.validate(async (valid) => {
     if (valid) {
       loading.value = true
-      const res = await usePost('/login', ruleForm)
+      const { data: refData } = await usePost('/login', ruleForm)
       loading.value = false
 
-      const data = res.data.value
+      const data = refData.value
 
-      if (data.data.success) {
-        const { data: _data } = data
+      if (data.success) {
         // 存储token
-        localStorage.setItem('access_token', _data.access_token)
-
-        // 执行跳转逻辑
+        localStorage.setItem('access_token', data.access_token)
         ElMessage({
-          message: data.msg,
+          message: '登录成功',
           type: 'success'
         })
-      } else {
-        ElMessage({
-          message: data.msg,
-          type: 'error'
-        })
+
+        // 跳转home
+        router.push('/home')
       }
     }
   })
