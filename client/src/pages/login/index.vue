@@ -113,7 +113,9 @@ const forget = async () => {
 .container {
   width: 100vw;
   height: 100vh;
+  /* background-image: url('https://j1.58cdn.com.cn/jinrong/images/ems1716862417616b06e5a009e748.png'); */
   background-color: #f5f5f5;
+  background-size: cover;
 
   display: flex;
   justify-content: center;
