@@ -4,17 +4,21 @@
       <Menu :menuList="[...homeRouter, ...menuRouter]" />
     </el-aside>
     <el-container>
-      <el-header class="header">header</el-header>
+      <el-header class="header">
+        <Header />
+      </el-header>
       <el-main class="main">
         <router-view></router-view>
       </el-main>
-      <el-footer class="footer">footer</el-footer>
+      <el-footer class="footer">
+        <Footer />
+      </el-footer>
     </el-container>
   </el-container>
 </template>
 
 <script setup>
-import { Menu } from '@/components'
+import { Menu, Header, Footer } from '@/components'
 
 import { homeRouter, menuRouter } from '@/router'
 </script>
@@ -33,7 +37,7 @@ import { homeRouter, menuRouter } from '@/router'
   }
 
   .main {
-    background-color: bisque;
+    /* border: 1px solid red; */
   }
 
   .footer {
