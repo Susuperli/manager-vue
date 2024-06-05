@@ -160,6 +160,7 @@ const goToLogin = () => router.push('/login')
 <style scoped>
 .register-container {
   width: 100%;
+  overflow: hidden;
 
   .title {
     text-align: center;

@@ -16,7 +16,7 @@ const props = defineProps({ locale: zhCn })
 
 <style scoped>
 .app-container {
-  padding: 20px;
+  /* padding: 20px; */
   height: 100vh;
   background-color: #f5f5f5;
 }
