@@ -1,6 +1,14 @@
 import { createFetch } from '@vueuse/core'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 import { ElMessage } from 'element-plus'
+
+const toastError = (msg) => {
+  ElMessage({
+    type: 'error',
+    message: msg ?? '网络请求失败，请稍后重试~',
+    duration: 1000
+  })
+}
 
 const useFetch = createFetch({
   baseUrl: 'http://localhost:3030',
@@ -14,26 +22,28 @@ const useFetch = createFetch({
       }
       return { options }
     },
-    afterFetch: async (ctx) => {
+    async afterFetch(ctx) {
       // 响应拦截
-      const { data, response } = ctx
+      const { data } = ctx
       const { code, msg } = data
 
-      const router = useRouter()
-
       if (code !== 200) {
-        ElMessage({
-          type: 'error',
-          message: msg ?? '网络请求失败，请稍后重试~',
-          duration: 1000
-        })
+        toastError(msg)
       }
 
-      if (response.status === 401) {
-        // 401 跳转登录页
-        router.push('/login')
-      }
       return { ...ctx, data: data.data }
+    },
+    async onFetchError(ctx) {
+      // 错误拦截
+      const { response, data } = ctx
+
+      toastError(data?.msg)
+
+      if (response?.status === 401) {
+        // 401 跳转登录页
+        router.replace('/login')
+      }
+      return { ...ctx, data: data?.data }
     }
   },
 
