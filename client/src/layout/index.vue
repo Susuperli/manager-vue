@@ -25,15 +25,19 @@ import { homeRouter, menuRouter } from '@/router'
 <style scoped>
 .container {
   height: 100vh;
+  background-color: #eee;
+  padding-right: 10px;
 
   .aside {
     width: 180px;
-    /* background-color: aqua; */
+    background-color: white;
+    margin-right: 10px;
   }
 
   .header {
-    height: 50px;
-    background-color: aquamarine;
+    height: 60px;
+    background-color: white;
+    border-radius: 5px;
   }
 
   .main {
