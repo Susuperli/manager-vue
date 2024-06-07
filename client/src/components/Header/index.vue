@@ -9,12 +9,9 @@
         <div>
           <div class="user-info">
             <div class="avatar">
-              <img
-                src="https://j1.58cdn.com.cn/jinrong/images/ems1716862417616b06e5a009e748.png"
-                alt="头像"
-              />
+              <img :src="userInfo?.avatar" />
             </div>
-            <div class="nickname">1111</div>
+            <div class="nickname">{{ userInfo?.nickname ?? '昵称' }}</div>
           </div>
         </div>
       </template>
@@ -32,6 +29,8 @@ import { useGet } from '@/request'
 
 // 获取用户信息
 const { data: userInfo, isFetching: loading } = useGet('/user/info')
+
+console.log(userInfo)
 
 // 退出登录
 const logout = async () => {

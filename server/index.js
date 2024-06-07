@@ -1,9 +1,11 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 // const mongoose = require('mongoose')
 
 const router = require('./router')
+const { allowedOrigins } = require('./constance')
 
 const verifyTokenMiddleware = require('./middleware/verifyToken')
 const timeoutMiddleware = require('./middleware/timeout')
@@ -18,11 +20,25 @@ const app = express()
 
 // dp.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
-app.use(cors())
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // 检查请求的域名是否在允许的域名列表中
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true)
+      } else {
+        callback(new Error('Not allowed by CORS'))
+      }
+    },
+    credentials: true // 允许携带凭据（cookie）
+  })
+)
 
 // 配置解析表单请求体
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+// 配置解析cookie
+app.use(cookieParser())
 
 // 验证token
 app.use(verifyTokenMiddleware())
