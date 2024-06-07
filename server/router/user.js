@@ -1,6 +1,6 @@
 const express = require('express')
 
-const { sleep, getUserInfo } = require('../utils')
+const { getUserInfo } = require('../utils')
 const { USER_ID, DEFAULT_AVATAR } = require('../constance')
 
 const router = express.Router()
@@ -16,8 +16,6 @@ router.get('/info', async (req, res, next) => {
       avatar: DEFAULT_AVATAR
     }
   }
-
-  await sleep(200)
 
   const userId = req.cookies?.[USER_ID]
   const userInfo = getUserInfo(userId)

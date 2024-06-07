@@ -61,8 +61,8 @@ const loading = ref(false)
 const router = useRouter()
 
 const ruleForm = reactive({
-  username: '',
-  password: ''
+  username: 'liyongzhi',
+  password: '123456'
 })
 
 const rules = reactive({

@@ -30,8 +30,6 @@ import { useGet } from '@/request'
 // 获取用户信息
 const { data: userInfo, isFetching: loading } = useGet('/user/info')
 
-console.log(userInfo)
-
 // 退出登录
 const logout = async () => {
   // await useGet('/logout')
