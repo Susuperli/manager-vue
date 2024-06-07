@@ -17,22 +17,39 @@
       </template>
 
       <template #default>
-        <div class="exit" @click="logout">退出登录</div>
+        <div class="exit" @click="logout" v-loading.fullscreen.lock="logoutLoading">退出登录</div>
       </template>
     </el-popover>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
-import { useGet } from '@/request'
+import { onMounted, ref } from 'vue'
+import { ElLoading } from 'element-plus'
+import { useRouter } from 'vue-router'
+import { useGet, usePost } from '@/request'
+
+const router = useRouter()
+const logoutLoading = ref(false)
 
 // 获取用户信息
-const { data: userInfo, isFetching: loading } = useGet('/user/info')
+const { data: userInfo } = useGet('/user/info')
 
 // 退出登录
 const logout = async () => {
-  // await useGet('/logout')
+  logoutLoading.value = true
+  const { data: logoutData } = await usePost('/logout')
+  logoutLoading.value = false
+
+  const { success } = logoutData.value
+
+  if (success) {
+    ElMessage({
+      type: 'success',
+      message: '退出成功'
+    })
+    router.push('/login')
+  }
 }
 </script>
 

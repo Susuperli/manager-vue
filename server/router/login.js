@@ -93,4 +93,34 @@ router.post('/register', async (req, res, next) => {
   next()
 })
 
+// 退出登录
+router.post('/logout', async (req, res, next) => {
+  const result = {
+    success: true,
+    code: 200,
+    msg: '退出成功',
+    data: {
+      success: true
+    }
+  }
+
+  await sleep(1000)
+
+  // 删除token
+  try {
+    writeToken(req.cookies[USER_ID], '')
+    // 清除cookie
+    res.clearCookie(ACCESS_TOKEN)
+    res.clearCookie(ACCESS_TOKEN)
+    res.clearCookie(NICKNAME)
+    res.clearCookie(USER_ID)
+  } catch (e) {
+    result.msg = '退出失败'
+    result.data.success = false
+  }
+
+  res.send(result)
+  next()
+})
+
 module.exports = router
