@@ -10,9 +10,9 @@
       <el-main class="main">
         <router-view></router-view>
       </el-main>
-      <el-footer class="footer">
+      <!-- <el-footer class="footer">
         <Footer />
-      </el-footer>
+      </el-footer> -->
     </el-container>
   </el-container>
 </template>
