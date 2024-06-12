@@ -6,13 +6,13 @@ import Register from '@/pages/register/index.vue'
 import Layout from '@/layout/index.vue'
 
 import Home from '@/pages/home/index.vue'
-import Test from '@/pages/test/index.vue'
+import AI from '@/pages/ai/index.vue'
 
 export const MAIN_NAME = 'main'
 
 export const homeRouter = [{ path: '/home', name: 'home', component: Home, title: '首页' }]
 
-export const menuRouter = [{ path: '/test', name: 'test', component: Test, title: '测试' }]
+export const menuRouter = [{ path: '/ai', name: 'ai', component: AI, title: 'AI' }]
 
 export const mainRouter = [
   {
