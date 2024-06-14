@@ -42,6 +42,9 @@ import { homeRouter, menuRouter } from '@/router'
 
   .main {
     /* border: 1px solid red; */
+    padding: 0;
+    padding-top: 10px;
+    border-radius: 5px;
   }
 
   .footer {
