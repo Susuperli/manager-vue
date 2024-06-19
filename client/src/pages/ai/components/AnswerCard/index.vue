@@ -31,6 +31,6 @@ const chattingRecords = ref([
   overflow-y: scroll;
   border-radius: 5px;
 
-  background-color: aqua;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

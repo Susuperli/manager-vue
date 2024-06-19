@@ -17,7 +17,9 @@ const text = ref('')
 const client = new OpenAI({
   apiKey: OPEN_AI_API_KEY,
   baseURL: 'https://api.moonshot.cn/v1',
-  // 后面自己写一个接口，这部分用node做中转
+  /**
+   * @TODO 后面自己写一个接口，这部分用node做中转
+   */
   dangerouslyAllowBrowser: true
 })
 
