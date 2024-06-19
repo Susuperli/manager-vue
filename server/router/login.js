@@ -61,6 +61,7 @@ router.post('/login', async (req, res, next) => {
 // 注册
 router.post('/register', async (req, res, next) => {
   const { username, password, nickname } = req.body
+  const loginMap = fileRelate.getFileContent('login.json')
   const userinfo = getUserInfo(username)
 
   const result = {
