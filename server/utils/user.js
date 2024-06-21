@@ -1,14 +1,16 @@
-const { fileRelate } = require('./fileRelate')
+const User = require('../db/models/User')
 
-function getPassword(username) {
-  const loginMap = fileRelate.getFileContent('login.json')
-  const userPassword = loginMap?.[username]?.password
-  return userPassword
-}
-function getUserInfo(username) {
-  const loginMap = fileRelate.getFileContent('login.json')
-  const userInfo = loginMap?.[username]
-  return userInfo
+async function getUserInfo(username) {
+  return await User.findOne({ username })
 }
 
-module.exports = { getPassword, getUserInfo }
+async function createUserInfo(userInfo) {
+  await User.create(userInfo)
+}
+
+async function getPassword(username) {
+  const userInfo = await getUserInfo(username)
+  return userInfo?.password
+}
+
+module.exports = { getPassword, getUserInfo, createUserInfo }

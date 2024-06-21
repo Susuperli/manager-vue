@@ -1,6 +1,13 @@
 const express = require('express')
 
-const { sleep, getToken, writeToken, fileRelate, getUserInfo, getPassword } = require('../utils')
+const {
+  sleep,
+  getToken,
+  writeToken,
+  getUserInfo,
+  getPassword,
+  createUserInfo
+} = require('../utils')
 const { COOKIE_TIME, NICKNAME, ACCESS_TOKEN, USER_ID } = require('../constance')
 
 const router = express.Router()
@@ -61,8 +68,7 @@ router.post('/login', async (req, res, next) => {
 // 注册
 router.post('/register', async (req, res, next) => {
   const { username, password, nickname } = req.body
-  const loginMap = fileRelate.getFileContent('login.json')
-  const userinfo = getUserInfo(username)
+  const userinfo = await getUserInfo(username)
 
   const result = {
     success: true,
@@ -79,14 +85,7 @@ router.post('/register', async (req, res, next) => {
     result.msg = '用户名已存在'
     result.data.success = false
   } else {
-    fileRelate.writeFileContentAsync('login.json', {
-      ...loginMap,
-      [username]: {
-        username,
-        password,
-        nickname
-      }
-    })
+    createUserInfo({ username, password, nickname })
   }
 
   res.send(result)
