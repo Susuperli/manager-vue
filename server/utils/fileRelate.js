@@ -50,15 +50,6 @@ const fileRelate = {
   }
 }
 
-const writeToken = (username, token) => {
-  const content = fileRelate.getFileContent('token.json')
-  content[username] = token
-  fileRelate.writeFileContentAsync('token.json', content)
-
-  return content
-}
-
 module.exports = {
-  fileRelate,
-  writeToken
+  fileRelate
 }

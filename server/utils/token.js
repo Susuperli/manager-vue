@@ -1,19 +1,11 @@
 const jsonWebToken = require('jsonwebtoken')
 
-const { fileRelate } = require('./fileRelate')
+const Token = require('../db/models/Token')
+const { insertDBErrorController } = require('./errorController')
+
 const { TOKEN_KEY } = require('../constance')
 
-const tokenMap = fileRelate.getFileContent('token.json')
-
-function getToken(username) {
-  // 如果有就从map里面取，没有就重新生成
-  const token = tokenMap[username]
-  // 验证cookie是否过期
-  if (token && jsonWebToken.decode(token).exp > Date.now()) {
-    return token
-  }
-
-  // 重新生成token
+function createToken(username) {
   return jsonWebToken.sign(
     {
       data: {
@@ -25,6 +17,19 @@ function getToken(username) {
       expiresIn: 60 * 24 * 7
     }
   )
+}
+
+async function getToken(username) {
+  // 如果有就从库里面取，没有就重新生成
+  const tokenInfo = await Token.findOne({ username })
+  const token = tokenInfo ? tokenInfo.token : null
+  // 验证cookie是否过期
+  if (verifyToken(token)) {
+    return token
+  }
+
+  // 重新生成token
+  return createToken(username)
 }
 
 function verifyToken(token) {
@@ -43,12 +48,30 @@ function verifyToken(token) {
   return result
 }
 
-function tokenInfo() {
-  return jsonWebToken.decode(token)
+async function insertToken(username, token) {
+  return await insertDBErrorController(
+    Token.insertMany({
+      username,
+      token
+    })
+  )
+}
+async function updateToken(username, token) {
+  const tokenInfo = await Token.findOne({ username })
+  console.log(tokenInfo, token)
+  return await Token.updateOne(
+    { username },
+    { $set: { token: token } },
+    { upsert: true, new: true }
+  )
+}
+
+async function writeToken(username, token) {
+  return await updateToken(username, token)
 }
 
 module.exports = {
   getToken,
   verifyToken,
-  tokenInfo
+  writeToken
 }
