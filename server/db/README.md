@@ -56,3 +56,13 @@ db.user.deleteMany(删除条件)
 ## mongoose
 
 > odm object document mapping (本质上就是 orm object relational mapping)
+
+## 可视化方式
+
+- mongoDB Compass
+- Robo3T
+- mongoDB Atlas
+- mongoDB cloud
+- mongoDB studio
+
+这里我使用 studio 3T `https://studio3t.com/`
