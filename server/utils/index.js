@@ -1,6 +1,6 @@
 const { getFileObject, writeFileObject, ...restFunction } = require('./fileRelate')
 const { sleep, sleepSync } = require('./sleep')
-const { getToken, verifyToken } = require('./token')
+const { getToken, verifyToken, writeToken } = require('./token')
 const { getPassword, getUserInfo, createUserInfo } = require('./user')
 
 module.exports = {
@@ -13,5 +13,6 @@ module.exports = {
   getPassword,
   getUserInfo,
   createUserInfo,
+  writeToken,
   ...restFunction
 }

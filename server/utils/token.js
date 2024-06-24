@@ -1,5 +1,7 @@
 const jsonWebToken = require('jsonwebtoken')
+
 const Token = require('../db/models/Token')
+const { insertDBErrorController } = require('./errorController')
 
 const { TOKEN_KEY } = require('../constance')
 
@@ -19,9 +21,10 @@ function createToken(username) {
 
 async function getToken(username) {
   // 如果有就从库里面取，没有就重新生成
-  const token = await Token.findOne({ username })
+  const tokenInfo = await Token.findOne({ username })
+  const token = tokenInfo ? tokenInfo.token : null
   // 验证cookie是否过期
-  if (token && jsonWebToken.decode(token).exp > Date.now()) {
+  if (verifyToken(token)) {
     return token
   }
 
@@ -45,11 +48,26 @@ function verifyToken(token) {
   return result
 }
 
+async function insertToken(username, token) {
+  return await insertDBErrorController(
+    Token.insertMany({
+      username,
+      token
+    })
+  )
+}
+async function updateToken(username, token) {
+  const tokenInfo = await Token.findOne({ username })
+  console.log(tokenInfo, token)
+  return await Token.updateOne(
+    { username },
+    { $set: { token: token } },
+    { upsert: true, new: true }
+  )
+}
+
 async function writeToken(username, token) {
-  return await Token.create({
-    username,
-    token
-  })
+  return await updateToken(username, token)
 }
 
 module.exports = {

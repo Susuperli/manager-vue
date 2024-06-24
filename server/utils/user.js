@@ -1,18 +1,13 @@
 const User = require('../db/models/User')
 
-const { handleMongooseError } = require('./errorController')
+const { insertDBErrorController } = require('./errorController')
 
 async function getUserInfo(username) {
   return await User.findOne({ username })
 }
 
 async function createUserInfo(userInfo) {
-  try {
-    return await User.insertMany(userInfo)
-  } catch (error) {
-    console.error('Error creating user:', handleMongooseError(error))
-    return false
-  }
+  return await insertDBErrorController(User.create(userInfo))
 }
 
 async function updateUserInfo(username, userInfo) {

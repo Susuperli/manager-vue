@@ -18,7 +18,7 @@ router.get('/info', async (req, res, next) => {
   }
 
   const userId = req.cookies?.[USER_ID]
-  const userInfo = getUserInfo(userId)
+  const userInfo = await getUserInfo(userId)
 
   if (userInfo) {
     result.data = {

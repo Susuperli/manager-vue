@@ -25,9 +25,9 @@ const useFetch = createFetch({
     async afterFetch(ctx) {
       // 响应拦截
       const { data } = ctx
-      const { code, msg } = data
+      const { code, msg, success } = data
 
-      if (code !== 200) {
+      if (code !== 200 || !success) {
         toastError(msg)
       }
 
