@@ -85,7 +85,12 @@ router.post('/register', async (req, res, next) => {
     result.msg = '用户名已存在'
     result.data.success = false
   } else {
-    createUserInfo({ username, password, nickname })
+    const createResult = createUserInfo({ username, password, nickname })
+    if (!createResult) {
+      result.msg = '添加失败'
+      result.data.success = false
+      result.success = false
+    }
   }
 
   res.send(result)

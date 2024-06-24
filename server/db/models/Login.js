@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require('../index')
 
 const LoginSchema = new mongoose.Schema({
   username: {
