@@ -58,7 +58,7 @@ async function insertToken(username, token) {
 }
 async function updateToken(username, token) {
   const tokenInfo = await Token.findOne({ username })
-  console.log(tokenInfo, token)
+  if (tokenInfo?.token === token) return true
   return await Token.updateOne(
     { username },
     { $set: { token: token } },

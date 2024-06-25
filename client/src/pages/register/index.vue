@@ -94,7 +94,7 @@ const registerForm = reactive({
 const rules = reactive({
   username: [
     { required: true, message: '请输入用户名' },
-    { min: 3, max: 10, message: '用户名长度需要在 3 到 10 个字符', trigger: 'blur' }
+    { min: 1, max: 20, message: '用户名长度需要在 1 到 20 个字符', trigger: 'blur' }
   ],
   nickname: [
     { required: true, message: '请输入昵称' },

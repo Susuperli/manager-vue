@@ -20,8 +20,6 @@ import { SOURCE } from '@/constance/index'
 const { chattingRecords } = defineProps({ chattingRecords: Array })
 
 const isUser = (source) => source === SOURCE.USER
-
-console.log(chattingRecords, 'chattingRecords')
 </script>
 
 <style scoped>

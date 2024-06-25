@@ -12,7 +12,8 @@
           <el-input
             v-model="ruleForm.username"
             placeholder="请输入用户名"
-            autocomplete="off"
+            autocomplete="on"
+            name="username"
           ></el-input>
         </el-form-item>
         <el-form-item label="密码" prop="password">
@@ -61,14 +62,14 @@ const loading = ref(false)
 const router = useRouter()
 
 const ruleForm = reactive({
-  username: 'liyongzhi',
-  password: '123456'
+  username: '',
+  password: ''
 })
 
 const rules = reactive({
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 10, message: '用户名长度需要在 3 到 10 个字符', trigger: 'blur' }
+    { min: 1, max: 20, message: '用户名长度需要在 1 到 20 个字符', trigger: 'blur' }
   ],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
