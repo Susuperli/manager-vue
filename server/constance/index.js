@@ -1,3 +1,4 @@
+const SERVER_NAME = 'manger-vue'
 // session token
 const TOKEN_KEY = 'token-liyongzhi'
 // 跳过验证token的接口
@@ -14,6 +15,7 @@ const allowedOrigins = ['http://localhost:5173']
 const DEFAULT_AVATAR = 'https://j1.58cdn.com.cn/jinrong/images/ems1716862417616b06e5a009e748.png'
 
 module.exports = {
+  SERVER_NAME,
   TOKEN_KEY,
   jumpTokenList,
   COOKIE_TIME,

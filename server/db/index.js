@@ -1,11 +1,10 @@
 const mongoose = require('mongoose')
 
+const { SERVER_NAME } = require('../constance')
+
 // const uri = 'mongodb://localhost:27017/manager-vue'
-const uri =
-  'mongodb+srv://susuperli:UBG2fGW55U9KQOGW@manager-vue.mc02qse.mongodb.net/?retryWrites=true&w=majority&appName=manager-vue'
+const uri = `mongodb+srv://susuperli:cvQ0yrZDGFr1mKHO@cluster0.c6xhtvq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
 const clientOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
   serverApi: {
     version: '1',
     strict: true,
