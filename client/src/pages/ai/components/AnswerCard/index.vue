@@ -1,13 +1,14 @@
 <template>
   <div class="answer-card-container">
     <ChattingRecordsCard :chattingRecords="chattingRecords" />
+    <ChattingInput />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 
-import { ChattingRecordsCard } from '@/components'
+import { ChattingRecordsCard, ChattingInput } from '@/components'
 
 import { DEFAULT_USER_AVATAR, DEFAULT_BOT_AVATAR } from './../../constance'
 import { ROLE } from '@/constance'
@@ -27,7 +28,7 @@ const chattingRecords = ref([
 <style scoped>
 .answer-card-container {
   width: 500px;
-  height: 500px;
+  /* height: 500px; */
   overflow-y: scroll;
   border-radius: 5px;
 

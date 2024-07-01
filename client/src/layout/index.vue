@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { Menu, Header, Footer } from '@/components'
+import { Menu, Header } from '@/components'
 
 import { homeRouter, menuRouter } from '@/router'
 </script>
