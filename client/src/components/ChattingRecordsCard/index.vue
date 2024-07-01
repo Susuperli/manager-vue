@@ -2,12 +2,12 @@
   <div class="chatting-card-container">
     <div class="chatting-card-item" v-for="(item, index) in chattingRecords" :key="index">
       <img
-        :class="['chatting-avatar', !isUser(item.source) ? 'visibility' : 'hidden']"
+        :class="['chatting-avatar', !isUser(item.role) ? 'visibility' : 'hidden']"
         :src="item.avatar"
       />
       <div class="chatting-content">{{ item.content }}</div>
       <img
-        :class="['chatting-avatar', isUser(item.source) ? 'visibility' : 'hidden']"
+        :class="['chatting-avatar', isUser(item.role) ? 'visibility' : 'hidden']"
         :src="item.avatar"
       />
     </div>
@@ -15,11 +15,11 @@
 </template>
 
 <script setup>
-import { SOURCE } from '@/constance/index'
+import { ROLE } from '@/constance/index'
 
 const { chattingRecords } = defineProps({ chattingRecords: Array })
 
-const isUser = (source) => source === SOURCE.USER
+const isUser = (role) => role === ROLE.USER
 </script>
 
 <style scoped>

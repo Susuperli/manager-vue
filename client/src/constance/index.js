@@ -1,1 +1,1 @@
-export const SOURCE = { BOT: 'bot', USER: 'user' }
+export const ROLE = { BOT: 'bot', USER: 'user' }

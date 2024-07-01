@@ -10,17 +10,17 @@ import { ref } from 'vue'
 import { ChattingRecordsCard } from '@/components'
 
 import { DEFAULT_USER_AVATAR, DEFAULT_BOT_AVATAR } from './../../constance'
-import { SOURCE } from '@/constance'
+import { ROLE } from '@/constance'
 
 const chattingRecords = ref([
   {
-    source: SOURCE.BOT,
+    role: ROLE.BOT,
     content: '您好，哪里可以帮助您呢',
     time: 1718260363,
     index: 0,
     avatar: DEFAULT_BOT_AVATAR
   },
-  { source: SOURCE.USER, content: '你好', time: 1718260363, avatar: DEFAULT_USER_AVATAR }
+  { role: ROLE.USER, content: '你好', time: 1718260363, avatar: DEFAULT_USER_AVATAR }
 ])
 </script>
 

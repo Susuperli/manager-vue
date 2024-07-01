@@ -12,7 +12,7 @@ const ACCESS_TOKEN = 'access_token'
 const allowedOrigins = ['http://localhost:5173']
 
 // 默认头像
-const DEFAULT_AVATAR = 'https://j1.58cdn.com.cn/jinrong/images/ems1716862417616b06e5a009e748.png'
+const DEFAULT_AVATAR = 'https://wos.58cdn.com.cn/cDazYxWcDHJ/picasso/5a0o3tfi.png'
 
 module.exports = {
   SERVER_NAME,
