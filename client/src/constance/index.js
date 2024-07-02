@@ -1,1 +1,1 @@
-export const ROLE = { BOT: 'bot', USER: 'user' }
+export const ROLE = { SYSTEM: 'system', USER: 'user' }

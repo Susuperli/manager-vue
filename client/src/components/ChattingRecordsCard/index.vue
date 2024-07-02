@@ -2,13 +2,13 @@
   <div class="chatting-card-container">
     <div class="chatting-card-item" v-for="(item, index) in chattingRecords" :key="index">
       <img
-        :class="['chatting-avatar', !isUser(item.role) ? 'visibility' : 'hidden']"
-        :src="item.avatar"
+        :class="['chatting-avatar', !isUser(item?.role) ? 'visibility' : 'hidden']"
+        :src="item?.avatar"
       />
-      <div class="chatting-content">{{ item.content }}</div>
+      <div class="chatting-content">{{ item?.content }}</div>
       <img
-        :class="['chatting-avatar', isUser(item.role) ? 'visibility' : 'hidden']"
-        :src="item.avatar"
+        :class="['chatting-avatar', isUser(item?.role) ? 'visibility' : 'hidden']"
+        :src="item?.avatar"
       />
     </div>
   </div>

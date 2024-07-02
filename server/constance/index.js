@@ -14,6 +14,13 @@ const allowedOrigins = ['http://localhost:5173']
 // 默认头像
 const DEFAULT_AVATAR = 'https://wos.58cdn.com.cn/cDazYxWcDHJ/picasso/5a0o3tfi.png'
 
+// ai key
+const OPEN_AI_API_KEY = 'sk-jCMLdQTESAOpbGTKBkAbIaMtfcrLq0NJa2AhqjJA5SWONWZV'
+const ROLE = { SYSTEM: 'system', USER: 'user' }
+const DEFAULT_USER_AVATAR = 'https://wos.58cdn.com.cn/cDazYxWcDHJ/picasso/5a0o3tfi.png'
+const DEFAULT_BOT_AVATAR =
+  'https://lh3.googleusercontent.com/a/ACg8ocJu0FZu4dVCK1gD56MEe17IPUy_kcjUKwXDc7e00J_O=s96-c'
+
 module.exports = {
   SERVER_NAME,
   TOKEN_KEY,
@@ -23,5 +30,10 @@ module.exports = {
   NICKNAME,
   USER_ID,
   ACCESS_TOKEN,
-  DEFAULT_AVATAR
+  DEFAULT_AVATAR,
+
+  OPEN_AI_API_KEY,
+  ROLE,
+  DEFAULT_USER_AVATAR,
+  DEFAULT_BOT_AVATAR
 }
