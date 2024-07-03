@@ -7,7 +7,13 @@ const {
   createChattingHistory,
   getChattingHistoryWithSystemInstance
 } = require('../services')
-const { OPEN_AI_API_KEY, ROLE, DEFAULT_BOT_AVATAR, USER_ID } = require('../constance')
+const {
+  OPEN_AI_API_KEY,
+  ROLE,
+  DEFAULT_BOT_AVATAR,
+  DEFAULT_USER_AVATAR,
+  USER_ID
+} = require('../constance')
 
 const router = express.Router()
 
@@ -25,7 +31,24 @@ router.get('/moonshot/getHistory', async (req, res, next) => {
   const historyRes = await getChattingHistory(userId, pageNo, pageSize)
 
   if (historyRes) {
-    result.data = historyRes
+    const _data = {
+      ...historyRes,
+      history: historyRes.history.map((item) => {
+        if (item.role === ROLE.SYSTEM) {
+          return {
+            ...item._doc,
+            avatar: DEFAULT_BOT_AVATAR
+          }
+        } else {
+          return {
+            ...item._doc,
+            avatar: DEFAULT_USER_AVATAR
+          }
+        }
+      })
+    }
+
+    result.data = _data
   } else {
     result.success = false
     result.msg = '获取聊天记录失败'
