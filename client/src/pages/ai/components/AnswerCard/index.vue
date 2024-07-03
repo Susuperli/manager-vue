@@ -14,14 +14,19 @@
 import { ref } from 'vue'
 
 import { ChattingRecordsCard, ChattingInput } from '@/components'
-import { usePost } from '@/request'
+import { usePost, useGet } from '@/request'
 
-import { DEFAULT_USER_AVATAR, DEFAULT_BOT_AVATAR } from './../../constance'
+import { DEFAULT_USER_AVATAR } from './../../constance'
 import { ROLE } from '@/constance'
 
 const chattingRecords = ref([])
 const chattingInput = ref('')
 const submitLoading = ref(false)
+
+const getHistory = async () => {
+  const { data: refData } = await useGet('/ai/moonshot/getHistory')
+  chattingRecords.value = refData.value?.history
+}
 
 const getAiResponse = async (message) => {
   const { data: refData } = await usePost('/ai/moonshot', { message })
@@ -49,6 +54,12 @@ const submit = async (chattingContent) => {
 
   chattingRecords.value.push(responseMessages)
 }
+
+const init = async () => {
+  await getHistory()
+}
+
+init()
 </script>
 
 <style scoped>

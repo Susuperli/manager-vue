@@ -3,12 +3,12 @@
     <div class="chatting-card-item" v-for="(item, index) in chattingRecords" :key="index">
       <img
         :class="['chatting-avatar', !isUser(item?.role) ? 'visibility' : 'hidden']"
-        :src="item?.avatar"
+        :src="item?.avatar ?? DEFAULT_BOT_AVATAR"
       />
       <div class="chatting-content">{{ item?.content }}</div>
       <img
         :class="['chatting-avatar', isUser(item?.role) ? 'visibility' : 'hidden']"
-        :src="item?.avatar"
+        :src="item?.avatar ?? DEFAULT_USER_AVATAR"
       />
     </div>
   </div>
@@ -16,6 +16,7 @@
 
 <script setup>
 import { ROLE } from '@/constance/index'
+import { DEFAULT_USER_AVATAR, DEFAULT_BOT_AVATAR } from '@/constance'
 
 const { chattingRecords } = defineProps({ chattingRecords: Array })
 
