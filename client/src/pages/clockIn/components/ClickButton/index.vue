@@ -1,15 +1,26 @@
 <template>
   <div class="button-container">
-    <div class="button" @click="buttonClick">点击</div>
+    <el-button  @click="buttonClick" :loading='isFetching' size='large'>点击</el-button>
   </div>
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
-const buttonClick = useDebounceFn(() => {
+import { usePost } from '@/request'
+
+const { init } = defineProps( ['init'])
+const isFetching = ref(false)
+
+const buttonClick = useDebounceFn(async () => {
   // 发送接口
-}, 1000)
+  isFetching.value = true
+   await usePost('/clockIn/do')
+   isFetching.value = false
+
+  await init()
+}, 500, { maxWait: 1000 })
 </script>
 
 <style scoped>
@@ -27,6 +38,8 @@ const buttonClick = useDebounceFn(() => {
     background-color: aqua;
     text-align: center;
     line-height: 200px;
+    color: #000;
+    font-size: 20px;
 
     cursor: pointer;
   }

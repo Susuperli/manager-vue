@@ -1,6 +1,6 @@
 <template>
   <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
-  <ClickButton />
+  <ClickButton :init='init' />
   <StatisticsCard :statisticsData="statisticsData" />
 </template>
 
@@ -8,80 +8,14 @@
 import { ref, reactive, onMounted } from 'vue'
 import dayjs from 'dayjs'
 
+import  { useGet }  from '@/request'
 import { defaultRecord } from './constant'
 
 import Calender from './components/Calendar/index.vue'
 import ClickButton from './components/ClickButton/index.vue'
 import StatisticsCard from './components/StatisticsCard/index.vue'
 
-const events = ref([
-  {
-    start: '2024-09-03 10:00:00',
-    end: '2024-09-03 11:00:00',
-    content: '早上打卡',
-    date: '2024-09-03'
-  },
-  {
-    start: '2024-09-03 20:00:00',
-    end: '2024-09-03 21:00:00',
-    content: '晚上打卡',
-    date: '2024-09-03'
-  },
-  {
-    start: '2024-09-04 10:00:00',
-    end: '2024-09-04 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-04'
-  },
-  {
-    start: '2024-09-05 10:00:00',
-    end: '2024-09-05 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-05'
-  },
-  {
-    start: '2024-09-06 10:00:00',
-    end: '2024-09-06 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-06'
-  },
-  {
-    start: '2024-09-07 10:00:00',
-    end: '2024-09-07 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-07'
-  },
-  {
-    start: '2024-09-08 10:00:00',
-    end: '2024-09-08 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-08'
-  },
-  {
-    start: '2024-09-09 10:00:00',
-    end: '2024-09-09 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-09'
-  },
-  {
-    start: '2024-09-10 10:00:00',
-    end: '2024-09-10 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-10'
-  },
-  {
-    start: '2024-09-11 10:00:00',
-    end: '2024-09-11 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-11'
-  },
-  {
-    start: '2024-09-12 10:00:00',
-    end: '2024-09-12 10:00:00',
-    content: '早上打卡',
-    date: '2024-09-12'
-  }
-])
+const events = reactive([])
 const monthEvents = ref({})
 const statisticsData = reactive({})
 
@@ -89,11 +23,18 @@ const current = dayjs()
 
 const formatDays = (day, format = 'YYYY-MM-DD') => day?.format(format)
 
+// 获取事件
+const getEvents = async () => {
+  const { data: eventData } = await useGet(`/clockIn/get?month=${current.format('YYYY-MM')}`)
+
+  events.value = eventData.value
+}
+
 const viewChange = (...arg) => {
   console.log('viewChange', arg)
 }
 
-const eventArray2Object = (eventArray) => {
+const eventArray2Object = (eventArray = []) => {
   const obj = {}
   eventArray.forEach((event) => {
     const { date } = event
@@ -124,12 +65,17 @@ const dealWithRecord = (records) => {
   return { start, end }
 }
 
-onMounted(() => {
-  // 获取按照月份的对象
-  monthEvents.value = eventArray2Object(events.value)
+const init = async () => {
+  await getEvents()
 
+    // 获取按照月份的对象
+  monthEvents.value = eventArray2Object(events.value)
   // 初始化
   statisticsData.value = dealWithRecord(getTodayEvents(formatDays(current)))
+}
+
+onMounted(async () => {
+   init()
 })
 </script>
 

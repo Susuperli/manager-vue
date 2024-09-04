@@ -13,6 +13,8 @@ const { statisticsData } = defineProps(['statisticsData'])
 <style scoped>
 .statistics-container {
   padding: 0 16px;
+  color: #000;
+
   .records-line {
     margin: 0 auto;
     text-align: center;
