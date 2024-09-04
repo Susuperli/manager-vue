@@ -24,16 +24,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { ElLoading } from 'element-plus'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useGet, usePost } from '@/request'
+import { usePost } from '@/request'
 
 const router = useRouter()
 const logoutLoading = ref(false)
 
-// 获取用户信息
-const { data: userInfo } = useGet('/user/info')
+const { userInfo } = defineProps({ userInfo: { required: true } })
 
 // 退出登录
 const logout = async () => {

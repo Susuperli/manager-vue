@@ -104,7 +104,7 @@ const register = async () => {
 }
 const forget = async () => {
   ElMessage({
-    message: '暂未开发，忘记了就重新注册吧！',
+    message: '暂未开发，请联系开发人员',
     type: 'warning'
   })
 }
@@ -115,6 +115,7 @@ const forget = async () => {
   width: 100vw;
   height: 100vh;
   /* background-image: url('https://j1.58cdn.com.cn/jinrong/images/ems1716862417616b06e5a009e748.png'); */
+  /* background-image: url('https://j1.58cdn.com.cn/jinrong/images/ems17252629075030c866b8c44ef3.png'); */
   background-color: #f5f5f5;
   background-size: cover;
 
@@ -152,6 +153,12 @@ const forget = async () => {
   }
   .dialog-text {
     text-align: center;
+  }
+
+  @media (max-width: 500px) {
+    .login-box {
+      width: 90%;
+    }
   }
 }
 </style>

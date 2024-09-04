@@ -18,5 +18,9 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4",
     "openai": "^4.52.2"
+  },
+  "devDependencies": {
+    "dayjs": "^1.11.13",
+    "radash": "^12.1.0"
   }
 }
