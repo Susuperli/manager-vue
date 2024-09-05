@@ -19,6 +19,7 @@
 
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { Menu, Header } from '@/components'
 import { homeRouter, menuRouter } from '@/router'
@@ -26,6 +27,8 @@ import { useGet } from '@/request'
 
 // 获取用户信息
 const { data: userInfo } = useGet('/user/info')
+
+const router = useRouter()
 
 const screenWidth = ref(window.innerWidth)
 const screenHeight = ref(window.innerHeight)
@@ -39,7 +42,8 @@ onMounted(() => {
   window.addEventListener('resize', updateScreenSize)
 
   if (screenWidth.value < 900) {
-    console.log(1111)
+    // 跳转到打卡页面
+    router.push('/clock-in')
   }
 })
 

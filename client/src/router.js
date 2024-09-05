@@ -16,7 +16,8 @@ export const MAIN_NAME = 'main'
 export const homeRouter = [{ path: '/home', name: 'home', component: Home, title: '首页' }]
 export const menuRouter = [
   { path: '/ai', name: 'ai', component: AI, title: 'AI' },
-  { path: '/test', name: 'test', component: Test, title: '测试' }
+  { path: '/test', name: 'test', component: Test, title: '测试' },
+  { path: '/clock-in-pc', name: 'clockInPc', component: ClockIn, title: '打卡' }
 ]
 
 export const mainRouter = [

@@ -1,5 +1,10 @@
 <template>
   <div v-loading="loading">
+    <div v-if="isMobile" class="description">
+      Hi! {{ ' ' }} {{ decodeURIComponent(getCookie('nickname')) }}
+    </div>
+    <div v-else class="description">移动端体验更佳~</div>
+
     <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
     <ClickButton :init="init" :clickDate="clickDate" />
     <StatisticsCard :statisticsData="statisticsData" />
@@ -12,7 +17,7 @@ import dayjs from 'dayjs'
 
 import { useGet } from '@/request'
 import { defaultRecord, formatDay, formatMonth, formatSeconds } from './constant'
-import { calculateDiff, seconds2Hours } from '@/utils'
+import { calculateDiff, seconds2Hours, getCookie } from '@/utils'
 
 import Calender from './components/Calendar/index.vue'
 import ClickButton from './components/ClickButton/index.vue'
@@ -27,6 +32,7 @@ const statisticsData = ref({})
 const clickDate = ref(current)
 const total = ref(0)
 const dayNum = ref(0)
+const isMobile = ref(false)
 
 const formatDays = (date, format = formatDay) => date?.format(format)
 
@@ -90,8 +96,18 @@ const init = async () => {
 }
 
 onMounted(async () => {
+  const screenWidth = window.innerWidth
+
+  if (screenWidth < 900) {
+    isMobile.value = true
+  }
+
   init()
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.description {
+  text-align: right;
+}
+</style>
