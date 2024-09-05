@@ -36,16 +36,21 @@ const isMobile = ref(false)
 const formatDays = (date, format = formatDay) => date?.format(format)
 
 // 获取事件
-const getEvents = async () => {
-  const { data: eventData } = await useGet(`/clockIn/get?month=${current.format(formatMonth)}`)
+const getEvents = async (month = current.format(formatMonth)) => {
+  const { data: eventData } = await useGet(`/clockIn/get?month=${month}`)
 
   events.value = eventData.value.list
   total.value = eventData.value.total
   dayNum.value = eventData.value.dayNum
 }
 
-const viewChange = (...arg) => {
-  console.log('viewChange', arg)
+const viewChange = (changeValue) => {
+  const { view, startDate } = changeValue || {}
+
+  if (view === 'month') {
+    const targetMonth = startDate.format(formatMonth)
+    init(targetMonth)
+  }
 }
 
 const eventArray2Object = (eventArray = []) => {
@@ -83,9 +88,9 @@ const dealWithRecord = (records) => {
   return { start, end, duration, total: total.value, dayNum: dayNum.value }
 }
 
-const init = async () => {
+const init = async (month) => {
   loading.value = true
-  await getEvents()
+  await getEvents(month)
   loading.value = false
 
   // 获取按照月份的对象

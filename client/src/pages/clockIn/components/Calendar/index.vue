@@ -8,7 +8,6 @@
     active-view="month"
     :disable-views="['week']"
     :events="events"
-    :dblclickToNavigate="false"
     @cell-click="clickDay"
     @view-change="viewChange"
   >

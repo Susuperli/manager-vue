@@ -23,6 +23,8 @@ export const formattedTime = (_totalSeconds) => {
   const tag = _totalSeconds < 0 ? '-' : ''
   const totalSeconds = _totalSeconds < 0 ? -_totalSeconds : _totalSeconds
 
+  if (Number.isNaN(_totalSeconds)) return '00小时00分钟00秒'
+
   // 将秒数转换为 dayjs.duration 对象
   const timeDuration = dayjs.duration(totalSeconds, 'seconds')
   // 格式化为 HH:mm:ss
