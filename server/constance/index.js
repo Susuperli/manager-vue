@@ -2,21 +2,18 @@ const SERVER_NAME = 'manger-vue'
 // session token
 const TOKEN_KEY = 'token-liyongzhi'
 // 跳过验证token的接口
-const jumpTokenList = [
-  '/login',
-  '/register',
-  '/file/upload',
-  '/clockIn/do',
-  '/clockIn/get',
-  '/clockIn/update'
-]
+const jumpTokenList = ['/login', '/register', '/file/upload']
 // cookie过期时间
 const COOKIE_TIME = 1000 * 60 * 60 * 24 * 7
 const NICKNAME = 'nickname'
 const USER_ID = 'userId'
 const ACCESS_TOKEN = 'access_token'
 // 允许域名
-const allowedOrigins = ['http://localhost:5173']
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://10.253.69.173:5173'
+]
 
 // 默认头像
 const DEFAULT_AVATAR = 'https://wos.58cdn.com.cn/cDazYxWcDHJ/picasso/5a0o3tfi.png'

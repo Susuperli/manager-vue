@@ -3,7 +3,7 @@
     <div class="records-line" />
     <div>{{ statisticsData?.start?.content }} {{ statisticsData?.start?.start }}</div>
     <div>{{ statisticsData?.end?.content }} {{ statisticsData?.end?.start }}</div>
-    <div>本日打卡时长为：{{ statisticsData?.duration }}h</div>
+    <div>本日打卡时长为：{{ statisticsData?.duration }} 小时</div>
     <div class="records-line" />
     <div>本月打卡时长为：{{ formattedTime(statisticsData?.total) }}</div>
     <div>本月打卡天数为：{{ statisticsData?.dayNum }} 天</div>

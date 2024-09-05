@@ -10,10 +10,6 @@ const router = express.Router()
 
 router.post('/do', async (req, res, next) => {
   const result = getResponseInstance()
-
-  /**
-   * @todo 取消默认
-   */
   const userId = req.cookies?.[USER_ID] ?? 'liyongzhi'
   const current = dayjs().format('YYYY-MM-DD HH:mm:ss')
   const date = dayjs().format('YYYY-MM-DD')
@@ -53,10 +49,6 @@ router.post('/do', async (req, res, next) => {
 
 router.get('/get', async (req, res, next) => {
   const { month } = req.query
-
-  /**
-   * @todo 取消默认
-   */
   const userId = req.cookies?.[USER_ID] ?? 'liyongzhi'
   const filter = { username: userId, month }
   const result = getResponseInstance()
@@ -93,9 +85,6 @@ router.post('/update', async (req, res, next) => {
   const result = getResponseInstance()
 
   const { date, start, newDate, newStart } = req.body
-  /**
-   * @todo 取消默认
-   */
   const userId = req.cookies?.[USER_ID] ?? 'liyongzhi'
 
   const filter = { date, start, username: userId }

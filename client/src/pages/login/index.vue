@@ -27,6 +27,11 @@
             >
           </el-input>
         </el-form-item>
+
+        <el-form-item label="">
+          <el-checkbox v-model="remember">记住密码</el-checkbox>
+        </el-form-item>
+
         <el-form-item>
           <div class="btn-box">
             <el-button
@@ -58,12 +63,13 @@ import { usePost } from '@/request'
 
 const formInstant = ref()
 const loading = ref(false)
+const remember = ref(Boolean(localStorage.getItem('remember')))
 
 const router = useRouter()
 
 const ruleForm = reactive({
-  username: '',
-  password: ''
+  username: localStorage.getItem('username'),
+  password: localStorage.getItem('password')
 })
 
 const rules = reactive({
@@ -74,8 +80,21 @@ const rules = reactive({
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
 
+const rememberPassword = () => {
+  localStorage.setItem('username', ruleForm.username)
+  localStorage.setItem('password', ruleForm.password)
+  localStorage.setItem('remember', true)
+}
+const clearPassword = () => {
+  localStorage.removeItem('username')
+  localStorage.removeItem('password')
+  localStorage.removeItem('remember')
+}
+
 const login = async (formInstant) => {
   if (!formInstant) return
+
+  remember.value ? rememberPassword() : clearPassword()
 
   formInstant.validate(async (valid) => {
     if (valid) {
@@ -85,7 +104,7 @@ const login = async (formInstant) => {
 
       const data = refData.value
 
-      if (data.success) {
+      if (data?.success) {
         // 存储token
         localStorage.setItem('access_token', data.access_token)
         ElMessage({

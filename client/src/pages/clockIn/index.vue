@@ -1,8 +1,6 @@
 <template>
   <div v-loading="loading">
-    <div v-if="isMobile" class="description">
-      Hi! {{ ' ' }} {{ decodeURIComponent(getCookie('nickname')) }}
-    </div>
+    <Header v-if="isMobile" :userInfo="{ nickname: decodeURIComponent(getCookie('nickname')) }" />
     <div v-else class="description">移动端体验更佳~</div>
 
     <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
@@ -16,6 +14,7 @@ import { ref, onMounted } from 'vue'
 import dayjs from 'dayjs'
 
 import { useGet } from '@/request'
+import { Header } from '@/components'
 import { defaultRecord, formatDay, formatMonth, formatSeconds } from './constant'
 import { calculateDiff, seconds2Hours, getCookie } from '@/utils'
 

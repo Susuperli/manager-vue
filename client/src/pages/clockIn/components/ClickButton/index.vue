@@ -6,7 +6,7 @@
       v-if="isToday(clickDate)"
       size="large"
       type="primary"
-      >点击</el-button
+      >打卡</el-button
     >
     <el-button type="primary" size="large" v-else @click="modifyClick">修改时间</el-button>
   </div>
