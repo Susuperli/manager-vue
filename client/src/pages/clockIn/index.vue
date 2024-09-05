@@ -1,33 +1,40 @@
 <template>
   <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
-  <ClickButton :init='init' />
+  <ClickButton :init="init" :disable="isToday(clickDate)" />
   <StatisticsCard :statisticsData="statisticsData" />
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import dayjs from 'dayjs'
 
-import  { useGet }  from '@/request'
-import { defaultRecord } from './constant'
+import { useGet } from '@/request'
+import { defaultRecord, formatDay, formatMonth, formatSeconds } from './constant'
+import { calculateDiff, seconds2Hours } from '@/utils'
 
 import Calender from './components/Calendar/index.vue'
 import ClickButton from './components/ClickButton/index.vue'
 import StatisticsCard from './components/StatisticsCard/index.vue'
 
-const events = reactive([])
-const monthEvents = ref({})
-const statisticsData = reactive({})
-
 const current = dayjs()
 
-const formatDays = (day, format = 'YYYY-MM-DD') => day?.format(format)
+const events = ref([])
+const monthEvents = ref({})
+const statisticsData = ref({})
+const clickDate = ref(current)
+const total = ref(0)
+const dayNum = ref(0)
+
+const formatDays = (date, format = formatDay) => date?.format(format)
+const isToday = (date) => date.isToday()
 
 // 获取事件
 const getEvents = async () => {
-  const { data: eventData } = await useGet(`/clockIn/get?month=${current.format('YYYY-MM')}`)
+  const { data: eventData } = await useGet(`/clockIn/get?month=${current.format(formatMonth)}`)
 
-  events.value = eventData.value
+  events.value = eventData.value.list
+  total.value = eventData.value.total
+  dayNum.value = eventData.value.dayNum
 }
 
 const viewChange = (...arg) => {
@@ -53,29 +60,33 @@ const getTodayEvents = (date) => {
 }
 
 const clickDay = (date) => {
-  const records = getTodayEvents(formatDays(date))
+  const dateString = formatDays(date)
+  const records = getTodayEvents(dateString)
   // 改变面板数据
   statisticsData.value = dealWithRecord(records)
+  clickDate.value = dayjs(dateString, formatDay)
 }
 
 // 处理记录
 const dealWithRecord = (records) => {
   const start = records?.[0] ?? defaultRecord
   const end = records?.[1] ?? defaultRecord
-  return { start, end }
+  const duration = seconds2Hours(calculateDiff(start.start, end.start, formatSeconds, 'seconds'))
+
+  return { start, end, duration, total: total.value, dayNum: dayNum.value }
 }
 
 const init = async () => {
   await getEvents()
 
-    // 获取按照月份的对象
+  // 获取按照月份的对象
   monthEvents.value = eventArray2Object(events.value)
   // 初始化
   statisticsData.value = dealWithRecord(getTodayEvents(formatDays(current)))
 }
 
 onMounted(async () => {
-   init()
+  init()
 })
 </script>
 

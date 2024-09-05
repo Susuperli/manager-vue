@@ -1,9 +1,10 @@
 const express = require('express')
 const dayjs = require('dayjs')
 
-const { getResponseInstance } = require('../utils')
+const { getResponseInstance, calculateDiff } = require('../utils')
 const { USER_ID } = require('../constance')
-const { createRecord, getRecord, updateRecord } = require('../services/clockIn')
+const { createRecord, getRecord, updateRecord } = require('../services/ClockIn')
+const { getTotal } = require('../controller/clockIn')
 
 const router = express.Router()
 
@@ -51,7 +52,7 @@ router.post('/do', async (req, res, next) => {
 })
 
 router.get('/get', async (req, res, next) => {
-  const { date, month } = req.query
+  const { month } = req.query
 
   /**
    * @todo 取消默认
@@ -61,15 +62,28 @@ router.get('/get', async (req, res, next) => {
   const result = getResponseInstance()
 
   const records = await getRecord(filter)
-  result.data = records.map((record) => {
-    return {
-      start: record.start,
-      end: record.end,
-      content: record.content,
-      month: record.month,
-      date: record.date
+  if (records === false) {
+    result.success = false
+    result.msg = '日期获取失败，请稍后重试~'
+  } else {
+    const list = records.map((record) => {
+      return {
+        start: record.start,
+        end: record.end,
+        content: record.content,
+        month: record.month,
+        date: record.date
+      }
+    })
+    const total = getTotal(list)
+    const dayNum = Math.floor(list.length / 2)
+
+    result.data = {
+      list,
+      total,
+      dayNum
     }
-  })
+  }
 
   res.send(result)
   next()

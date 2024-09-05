@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const dayjs = require('dayjs')
+const duration = require('dayjs/plugin/duration')
 
 require('./db')
 
@@ -10,6 +12,8 @@ const { allowedOrigins } = require('./constance')
 
 const verifyTokenMiddleware = require('./middleware/verifyToken')
 const timeoutMiddleware = require('./middleware/timeout')
+
+dayjs.extend(duration)
 
 const port = 3030
 const app = express()

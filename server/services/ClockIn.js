@@ -1,4 +1,4 @@
-const ClockIn = require('../db/models/clockIn')
+const ClockIn = require('../db/models/ClockIn')
 
 const { handleMongooseError } = require('../utils/errorController')
 

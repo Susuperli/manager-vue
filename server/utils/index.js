@@ -3,6 +3,7 @@ const { sleep, sleepSync } = require('./sleep')
 const { getToken, verifyToken, writeToken } = require('./token')
 const { getPassword, getUserInfo, createUserInfo } = require('./user')
 const { getResponseInstance, ...restResponseInstanceFunction } = require('./responseInstance')
+const { ...dateFn } = require('./date')
 
 module.exports = {
   getFileObject,
@@ -17,5 +18,6 @@ module.exports = {
   writeToken,
   getResponseInstance,
   ...restFunction,
-  ...restResponseInstanceFunction
+  ...restResponseInstanceFunction,
+  ...dateFn
 }
