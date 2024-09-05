@@ -1,7 +1,9 @@
 <template>
-  <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
-  <ClickButton :init="init" :disable="isToday(clickDate)" />
-  <StatisticsCard :statisticsData="statisticsData" />
+  <div v-loading="loading">
+    <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
+    <ClickButton :init="init" :disable="isToday(clickDate)" />
+    <StatisticsCard :statisticsData="statisticsData" />
+  </div>
 </template>
 
 <script setup>
@@ -18,6 +20,7 @@ import StatisticsCard from './components/StatisticsCard/index.vue'
 
 const current = dayjs()
 
+const loading = ref(false)
 const events = ref([])
 const monthEvents = ref({})
 const statisticsData = ref({})
@@ -77,7 +80,9 @@ const dealWithRecord = (records) => {
 }
 
 const init = async () => {
+  loading.value = true
   await getEvents()
+  loading.value = false
 
   // 获取按照月份的对象
   monthEvents.value = eventArray2Object(events.value)
