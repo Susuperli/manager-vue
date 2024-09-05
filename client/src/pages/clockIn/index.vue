@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
     <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
-    <ClickButton :init="init" :disable="isToday(clickDate)" />
+    <ClickButton :init="init" :clickDate="clickDate" />
     <StatisticsCard :statisticsData="statisticsData" />
   </div>
 </template>
@@ -29,7 +29,6 @@ const total = ref(0)
 const dayNum = ref(0)
 
 const formatDays = (date, format = formatDay) => date?.format(format)
-const isToday = (date) => date.isToday()
 
 // 获取事件
 const getEvents = async () => {

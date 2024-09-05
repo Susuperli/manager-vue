@@ -3,22 +3,26 @@
     <el-button
       @click="buttonClick"
       :loading="isFetching"
+      v-if="isToday(clickDate)"
       size="large"
       type="primary"
-      :disabled="!disable"
       >点击</el-button
     >
+    <el-button type="primary" size="large" v-else @click="modifyClick">修改时间</el-button>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
 import { useDebounceFn } from '@vueuse/core'
 
 import { usePost } from '@/request'
 
-const { init, disable } = defineProps(['init', 'disable'])
+const { init, clickDate } = defineProps(['init', 'clickDate'])
 const isFetching = ref(false)
+
+const isToday = (date) => date.isToday()
 
 const buttonClick = useDebounceFn(
   async () => {
@@ -32,6 +36,13 @@ const buttonClick = useDebounceFn(
   500,
   { maxWait: 1000 }
 )
+const modifyClick = () => {
+  ElMessage({
+    type: 'warning',
+    message: '努力开发中，如有问题请先联系开发人员',
+    duration: 2000
+  })
+}
 </script>
 
 <style scoped>
