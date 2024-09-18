@@ -1,3 +1,5 @@
+const path = require('path')
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -31,6 +33,9 @@ app.use(
     credentials: true // 允许携带凭据（cookie）
   })
 )
+
+// 静态文件托管
+app.use('/static', express.static(path.join(__dirname, 'static')))
 
 // 配置解析表单请求体
 app.use(express.json())

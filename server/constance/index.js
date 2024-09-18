@@ -12,7 +12,8 @@ const ACCESS_TOKEN = 'access_token'
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  'http://10.253.69.173:5173'
+  'http://10.253.69.173:5173',
+  'http://10.253.69.173:3030'
 ]
 
 // 默认头像

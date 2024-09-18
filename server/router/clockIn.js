@@ -40,6 +40,8 @@ router.post('/do', async (req, res, next) => {
     if (update !== false) success = true
   }
 
+  console.log(`/clock-in/do ${userId} ${current} 打卡成功`)
+
   result.success = success
   if (!success) result.msg = '更新失败'
 
@@ -85,7 +87,7 @@ router.post('/update', async (req, res, next) => {
   const result = getResponseInstance()
 
   const { date, start, newDate, newStart } = req.body
-  const userId = req.cookies?.[USER_ID] ?? 'liyongzhi'
+  const userId = req.cookies?.[USER_ID]
 
   const filter = { date, start, username: userId }
   const data = { date: newDate, start: newStart, end: newStart }
