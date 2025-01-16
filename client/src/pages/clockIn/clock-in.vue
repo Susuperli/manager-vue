@@ -97,6 +97,8 @@ const init = async (month) => {
   monthEvents.value = eventArray2Object(events.value)
   // 初始化
   statisticsData.value = dealWithRecord(getTodayEvents(formatDays(current)))
+
+  console.log(statisticsData.value)
 }
 
 onMounted(async () => {

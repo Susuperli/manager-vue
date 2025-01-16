@@ -1,6 +1,7 @@
 <template>
   <div class="statistics-container">
     <div class="records-line" />
+    <div>当前时间 {{ currentTime }}</div>
     <div>{{ statisticsData?.start?.content }} {{ statisticsData?.start?.start }}</div>
     <div>{{ statisticsData?.end?.content }} {{ statisticsData?.end?.start }}</div>
     <div>本日打卡时长为：{{ statisticsData?.duration }} 小时</div>
@@ -17,10 +18,26 @@
 </template>
 
 <script setup>
-import { toRefs } from 'vue'
+import { toRefs, ref, onMounted, onUnmounted } from 'vue'
+import dayjs from 'dayjs'
 
 import { formattedTime } from '@/utils'
 import { defaultTime } from './../../constant'
+
+const currentTime = ref(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+let rafId = null
+
+const updateTime = () => {
+  currentTime.value = dayjs().format('YYYY-MM-DD HH:mm:ss')
+  rafId = requestAnimationFrame(updateTime)
+}
+
+onMounted(() => {
+  rafId == requestAnimationFrame(updateTime)
+})
+onUnmounted(() => {
+  if (rafId) cancelAnimationFrame(rafId)
+})
 
 const props = defineProps(['statisticsData'])
 

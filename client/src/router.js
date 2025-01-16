@@ -9,7 +9,7 @@ import Home from '@/pages/home/index.vue'
 import AI from '@/pages/ai/index.vue'
 import Test from '@/pages/test/index.vue'
 
-import ClockIn from '@/pages/clockIn/index.vue'
+import ClockIn from '@/pages/clockIn/clock-in.vue'
 
 export const MAIN_NAME = 'main'
 
