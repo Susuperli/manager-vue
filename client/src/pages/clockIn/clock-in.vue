@@ -4,8 +4,9 @@
     <div v-else class="description">移动端体验更佳~</div>
 
     <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
-    <ClickButton :init="init" :clickDate="clickDate" />
+    <ClickButton :init="init" :clickDate="clickDate" @open-dialog="clickDateChange" />
     <StatisticsCard :statisticsData="statisticsData" />
+    <ChangeTime :visible="changeTimeVisible" :statisticsData="statisticsData" />
   </div>
 </template>
 
@@ -19,8 +20,9 @@ import { defaultRecord, formatDay, formatMonth, formatSeconds } from './constant
 import { calculateDiff, seconds2Hours, getCookie } from '@/utils'
 
 import Calender from './components/Calendar/index.vue'
-import ClickButton from './components/ClickButton/index.vue'
+import ClickButton from './components/ClickButton/click-button.vue'
 import StatisticsCard from './components/StatisticsCard/index.vue'
+import ChangeTime from './components/ChangeTime/change-time.vue'
 
 const current = dayjs()
 
@@ -32,6 +34,7 @@ const clickDate = ref(current)
 const total = ref(0)
 const dayNum = ref(0)
 const isMobile = ref(false)
+const changeTimeVisible = ref(false)
 
 const formatDays = (date, format = formatDay) => date?.format(format)
 
@@ -79,6 +82,10 @@ const clickDay = (date) => {
   clickDate.value = dayjs(dateString, formatDay)
 }
 
+const clickDateChange = () => {
+  changeTimeVisible.value = true
+}
+
 // 处理记录
 const dealWithRecord = (records) => {
   const start = records?.[0] ?? defaultRecord
@@ -97,8 +104,6 @@ const init = async (month) => {
   monthEvents.value = eventArray2Object(events.value)
   // 初始化
   statisticsData.value = dealWithRecord(getTodayEvents(formatDays(current)))
-
-  console.log(statisticsData.value)
 }
 
 onMounted(async () => {

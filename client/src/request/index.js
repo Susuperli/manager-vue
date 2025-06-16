@@ -11,7 +11,7 @@ const toastError = (msg) => {
 }
 
 const useFetch = createFetch({
-  baseUrl: 'http://10.253.69.173:3030',
+  baseUrl: 'http://10.253.50.224:3030',
 
   options: {
     async beforeFetch({ options }) {

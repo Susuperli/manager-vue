@@ -8,22 +8,25 @@
       type="primary"
       >打卡</el-button
     >
-    <el-button type="primary" size="large" v-else @click="modifyClick">修改时间</el-button>
+    <el-button type="primary" size="large" v-else @click="clickDateChange">修改时间</el-button>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ref, defineEmits } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { usePost } from '@/request'
 
 const { init, clickDate } = defineProps(['init', 'clickDate'])
-const isFetching = ref(false)
+const emit = defineEmits('open-dialog')
 
+const isFetching = ref(false)
 const isToday = (date) => date.isToday()
 
+const clickDateChange = () => {
+  emit('open-dialog')
+}
 const buttonClick = useDebounceFn(
   async () => {
     // 发送接口
@@ -36,13 +39,6 @@ const buttonClick = useDebounceFn(
   500,
   { maxWait: 1000 }
 )
-const modifyClick = () => {
-  ElMessage({
-    type: 'warning',
-    message: '努力开发中，如有问题请先联系开发人员',
-    duration: 2000
-  })
-}
 </script>
 
 <style scoped>
