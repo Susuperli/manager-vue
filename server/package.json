@@ -21,6 +21,7 @@
     "openai": "^4.52.2"
   },
   "devDependencies": {
+    "body-parser": "^2.2.0",
     "dayjs": "^1.11.13",
     "radash": "^12.1.0"
   }
