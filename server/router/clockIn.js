@@ -8,12 +8,14 @@ const { getTotal } = require('../controller/clockIn')
 
 const router = express.Router()
 
+const dayjsCN = (date) => dayjs(date).tz('Asia/Shanghai')
+
 router.post('/do', async (req, res, next) => {
   const result = getResponseInstance()
   const userId = req.cookies?.[USER_ID] ?? 'liyongzhi'
-  const current = dayjs().format('YYYY-MM-DD HH:mm:ss')
-  const date = dayjs().format('YYYY-MM-DD')
-  const month = dayjs().format('YYYY-MM')
+  const current = dayjsCN().format('YYYY-MM-DD HH:mm:ss')
+  const date = dayjsCN().format('YYYY-MM-DD')
+  const month = dayjsCN().format('YYYY-MM')
 
   let success = false
   // 获取记录，判断是否为第一次记录

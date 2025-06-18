@@ -6,6 +6,8 @@ const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const dayjs = require('dayjs')
 const duration = require('dayjs/plugin/duration')
+const utc = require('dayjs/plugin/utc')
+const timezone = require('dayjs/plugin/timezone')
 
 require('./db')
 
@@ -16,6 +18,8 @@ const verifyTokenMiddleware = require('./middleware/verifyToken')
 const timeoutMiddleware = require('./middleware/timeout')
 
 dayjs.extend(duration)
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const port = 3030
 const app = express()
