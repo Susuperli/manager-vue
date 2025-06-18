@@ -13,7 +13,7 @@ const toastError = (msg) => {
 const isDev = import.meta.env.DEV
 
 const useFetch = createFetch({
-  baseUrl: isDev ? 'http://10.253.50.224:3030/api' : 'https://manager-vue.render.com/api',
+  baseUrl: isDev ? 'http://10.253.50.224:3030/api' : 'https://manager-vue.onrender.com/api',
 
   options: {
     async beforeFetch({ options }) {
