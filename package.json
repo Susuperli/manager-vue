@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "(cd client && npm run dev) & (cd server && npm run start)",
-    "start": "cd server && npm run start"
+    "start": "cd server && pnpm install && pnpm run start"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +15,8 @@
     "eslint": "^9.17.0",
     "eslint-plugin-vue": "^9.32.0",
     "globals": "^15.13.0"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
