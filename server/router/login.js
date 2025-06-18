@@ -50,6 +50,8 @@ router.post('/login', async (req, res, next) => {
         httpOnly: true
       })
 
+      console.log(`/login ${username}登录成功`)
+
       result.msg = '登录成功'
       result.data.success = true
       result.success = true

@@ -27,6 +27,11 @@
             >
           </el-input>
         </el-form-item>
+
+        <el-form-item label="">
+          <el-checkbox v-model="remember">记住密码</el-checkbox>
+        </el-form-item>
+
         <el-form-item>
           <div class="btn-box">
             <el-button
@@ -58,12 +63,13 @@ import { usePost } from '@/request'
 
 const formInstant = ref()
 const loading = ref(false)
+const remember = ref(Boolean(localStorage.getItem('remember')))
 
 const router = useRouter()
 
 const ruleForm = reactive({
-  username: '',
-  password: ''
+  username: localStorage.getItem('username'),
+  password: localStorage.getItem('password')
 })
 
 const rules = reactive({
@@ -74,8 +80,21 @@ const rules = reactive({
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
 
+const rememberPassword = () => {
+  localStorage.setItem('username', ruleForm.username)
+  localStorage.setItem('password', ruleForm.password)
+  localStorage.setItem('remember', true)
+}
+const clearPassword = () => {
+  localStorage.removeItem('username')
+  localStorage.removeItem('password')
+  localStorage.removeItem('remember')
+}
+
 const login = async (formInstant) => {
   if (!formInstant) return
+
+  remember.value ? rememberPassword() : clearPassword()
 
   formInstant.validate(async (valid) => {
     if (valid) {
@@ -85,7 +104,7 @@ const login = async (formInstant) => {
 
       const data = refData.value
 
-      if (data.success) {
+      if (data?.success) {
         // 存储token
         localStorage.setItem('access_token', data.access_token)
         ElMessage({
@@ -104,7 +123,7 @@ const register = async () => {
 }
 const forget = async () => {
   ElMessage({
-    message: '暂未开发，忘记了就重新注册吧！',
+    message: '暂未开发，请联系开发人员',
     type: 'warning'
   })
 }
@@ -115,6 +134,7 @@ const forget = async () => {
   width: 100vw;
   height: 100vh;
   /* background-image: url('https://j1.58cdn.com.cn/jinrong/images/ems1716862417616b06e5a009e748.png'); */
+  /* background-image: url('https://j1.58cdn.com.cn/jinrong/images/ems17252629075030c866b8c44ef3.png'); */
   background-color: #f5f5f5;
   background-size: cover;
 
@@ -152,6 +172,12 @@ const forget = async () => {
   }
   .dialog-text {
     text-align: center;
+  }
+
+  @media (max-width: 500px) {
+    .login-box {
+      width: 90%;
+    }
   }
 }
 </style>

@@ -1,3 +1,5 @@
+const { omit } = require('radash')
+
 function getResponseInstance(success, code, msg, data) {
   return {
     success: success || true,
@@ -7,6 +9,11 @@ function getResponseInstance(success, code, msg, data) {
   }
 }
 
+function handleDataFromDb(data, ...rest) {
+  return omit(data, ['_id', 'createdAt', 'updatedAt', '__v', ...rest])
+}
+
 module.exports = {
-  getResponseInstance
+  getResponseInstance,
+  handleDataFromDb
 }

@@ -9,7 +9,7 @@
         <div>
           <div class="user-info">
             <div class="avatar">
-              <img :src="userInfo?.avatar" />
+              <img :src="userInfo?.avatar ?? DEFAULT_USER_AVATAR" />
             </div>
             <div class="nickname">{{ userInfo?.nickname ?? '昵称' }}</div>
           </div>
@@ -24,16 +24,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
-import { ElLoading } from 'element-plus'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useGet, usePost } from '@/request'
+import { usePost } from '@/request'
+import { DEFAULT_USER_AVATAR } from '@/constance'
 
 const router = useRouter()
 const logoutLoading = ref(false)
 
-// 获取用户信息
-const { data: userInfo } = useGet('/user/info')
+const { userInfo } = defineProps({ userInfo: { required: true } })
 
 // 退出登录
 const logout = async () => {
@@ -64,6 +63,8 @@ const logout = async () => {
     display: flex;
     align-items: center;
     height: 100%;
+
+    padding-right: 10px;
 
     .avatar {
       width: 40px;

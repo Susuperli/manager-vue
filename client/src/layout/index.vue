@@ -5,7 +5,7 @@
     </el-aside>
     <el-container>
       <el-header class="header">
-        <Header />
+        <Header :userInfo="userInfo" />
       </el-header>
       <el-main class="main">
         <router-view></router-view>
@@ -18,15 +18,43 @@
 </template>
 
 <script setup>
-import { Menu, Header } from '@/components'
+import { onMounted, onUnmounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+import { Menu, Header } from '@/components'
 import { homeRouter, menuRouter } from '@/router'
+import { useGet } from '@/request'
+
+// 获取用户信息
+const { data: userInfo } = useGet('/user/info')
+
+const router = useRouter()
+
+const screenWidth = ref(window.innerWidth)
+const screenHeight = ref(window.innerHeight)
+
+const updateScreenSize = () => {
+  screenWidth.value = window.innerWidth
+  screenHeight.value = window.innerHeight
+}
+
+onMounted(() => {
+  window.addEventListener('resize', updateScreenSize)
+
+  if (screenWidth.value < 900) {
+    // 跳转到打卡页面
+    router.push('/clock-in')
+  }
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateScreenSize)
+})
 </script>
 <style scoped>
 .container {
   height: 100vh;
   background-color: #eee;
-  padding-right: 10px;
 
   .aside {
     width: 180px;
@@ -41,10 +69,10 @@ import { homeRouter, menuRouter } from '@/router'
   }
 
   .main {
-    /* border: 1px solid red; */
     padding: 0;
     padding-top: 10px;
     border-radius: 5px;
+    padding: 10px;
   }
 
   .footer {

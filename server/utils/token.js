@@ -14,7 +14,7 @@ function createToken(username) {
     },
     TOKEN_KEY,
     {
-      expiresIn: 60 * 24 * 7
+      expiresIn: '30d'
     }
   )
 }
