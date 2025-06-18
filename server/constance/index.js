@@ -15,7 +15,8 @@ const allowedOrigins = [
   'http://10.253.50.224:5173',
   'http://10.253.50.224:3030',
   'http://10.253.50.224:5177',
-  'http://localhost:5177'
+  'http://localhost:5177',
+  'https://manager-vue.onrender.com'
 ]
 
 // 默认头像
