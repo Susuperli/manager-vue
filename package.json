@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "(cd client && npm run dev) & (cd server && npm run start)"
+    "dev": "(cd client && npm run dev) & (cd server && npm run start)",
+    "start": "cd server && npm run start"
   },
   "keywords": [],
   "author": "",
