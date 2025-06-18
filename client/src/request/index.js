@@ -10,8 +10,10 @@ const toastError = (msg) => {
   })
 }
 
+const isDev = import.meta.env.DEV
+
 const useFetch = createFetch({
-  baseUrl: 'http://10.253.50.224:3030/api',
+  baseUrl: isDev ? 'http://10.253.50.224:3030/api' : 'https://dashboard.render.com/api',
 
   options: {
     async beforeFetch({ options }) {
