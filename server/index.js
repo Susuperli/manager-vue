@@ -35,7 +35,7 @@ app.use(
 )
 
 // 静态文件托管
-app.use('/static', express.static(path.join(__dirname, 'static')))
+app.use(express.static(path.join(__dirname, 'static')))
 
 // 配置解析表单请求体
 app.use(express.json())
@@ -43,14 +43,16 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // 配置解析cookie
 app.use(cookieParser())
 
-// 验证token
-app.use(verifyTokenMiddleware())
-
 // 路由请求超时的中间件
 app.use(timeoutMiddleware())
 
-// 路由
-app.use(router)
+// 验证token, 挂载路由
+app.use('/api', verifyTokenMiddleware(), router)
+
+// 兜底路由：返回 index.html，让前端路由接管
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, 'static', 'index.html'))
+})
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`)

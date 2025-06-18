@@ -2,7 +2,7 @@ const SERVER_NAME = 'manger-vue'
 // session token
 const TOKEN_KEY = 'token-liyongzhi'
 // 跳过验证token的接口
-const jumpTokenList = ['/login', '/register', '/file/upload']
+const jumpTokenList = ['/login', '/register', '/file/upload', '/', '/static/assets']
 // cookie过期时间
 const COOKIE_TIME = 1000 * 60 * 60 * 24 * 7
 const NICKNAME = 'nickname'
