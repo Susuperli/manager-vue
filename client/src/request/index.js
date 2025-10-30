@@ -14,7 +14,7 @@ const isDev = import.meta.env.DEV
 
 // 判断当前域名，来选择使用 manager-vue.onrender 或者 http://140.143.248.125:3030/api
 const useFetch = createFetch({
-  baseUrl: isDev ? 'http://10.253.50.224:3030/api' : 'https://140.143.248.125:3030/api',
+  baseUrl: isDev ? 'http://10.253.50.224:3030/api' : 'http://140.143.248.125:3030/api',
 
   options: {
     async beforeFetch({ options }) {
