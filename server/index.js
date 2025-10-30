@@ -58,6 +58,6 @@ app.get('*', (_, res) => {
   res.sendFile(path.join(__dirname, 'static', 'index.html'))
 })
 
-app.listen(port, '0,0,0,0', () => {
+app.listen(port, '0.0.0.0', () => {
   console.log(`listening on port ${port}`)
 })
