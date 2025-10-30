@@ -35,12 +35,6 @@ importers:
       openai:
         specifier: ^4.52.2
         version: 4.104.0
-      timezone:
-        specifier: link:dayjs/plugin/timezone
-        version: link:dayjs/plugin/timezone
-      utc:
-        specifier: link:dayjs/plugin/utc
-        version: link:dayjs/plugin/utc
     devDependencies:
       body-parser:
         specifier: ^2.2.0

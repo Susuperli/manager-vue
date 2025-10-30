@@ -18,9 +18,7 @@
     "express-jwt": "^8.4.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.4.4",
-    "openai": "^4.52.2",
-    "timezone": "link:dayjs/plugin/timezone",
-    "utc": "link:dayjs/plugin/utc"
+    "openai": "^4.52.2"
   },
   "devDependencies": {
     "body-parser": "^2.2.0",
