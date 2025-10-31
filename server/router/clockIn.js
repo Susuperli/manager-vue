@@ -88,17 +88,48 @@ router.get('/get', async (req, res, next) => {
 router.post('/update', async (req, res, next) => {
   const result = getResponseInstance()
 
-  const { date, start, newDate, newStart } = req.body
-  const userId = req.cookies?.[USER_ID]
+  const { date, oldStart, oldEnd, newStart, newEnd } = req.body
+  const userId = req.cookies?.[USER_ID] ?? 'liyongzhi'
+  const month = dayjsCN(date).format('YYYY-MM')
 
-  const filter = { date, start, username: userId }
-  const data = { date: newDate, start: newStart, end: newStart }
+  try {
+    // 更新开始记录
+    if (oldStart && newStart) {
+      const startFilter = { date, start: oldStart, username: userId, content: '上班打卡' }
+      const startData = { start: newStart, end: newStart, month }
+      const startUpdate = await updateRecord(startFilter, startData)
+      
+      if (!startUpdate) {
+        result.success = false
+        result.msg = '更新开始时间失败'
+        res.send(result)
+        next()
+        return
+      }
+    }
 
-  const update = await updateRecord(filter, data)
+    // 更新结束记录
+    if (oldEnd && newEnd) {
+      const endFilter = { date, start: oldEnd, username: userId, content: '下班打卡' }
+      const endData = { start: newEnd, end: newEnd, month }
+      const endUpdate = await updateRecord(endFilter, endData)
+      
+      if (!endUpdate) {
+        result.success = false
+        result.msg = '更新结束时间失败'
+        res.send(result)
+        next()
+        return
+      }
+    }
 
-  if (update === false) {
+    console.log(`/clock-in/update ${userId} ${date} 更新成功`)
+    result.success = true
+    result.msg = '更新成功'
+  } catch (error) {
+    console.error('更新失败:', error)
     result.success = false
-    result.msg = '更新失败'
+    result.msg = '更新失败，请稍后重试'
   }
 
   res.send(result)
