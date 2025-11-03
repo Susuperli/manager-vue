@@ -12,11 +12,12 @@ const ACCESS_TOKEN = 'access_token'
 const allowedOrigins = [
   'http://localhost:5173',
   'http://127.0.0.1:5173',
-  'http://10.253.50.224:5173',
-  'http://10.253.50.224:3030',
-  'http://10.253.50.224:5177',
+  'http://10.253.24.194:5173',
+  'http://10.253.24.194:3030',
+  'http://10.253.24.194:5177',
   'http://localhost:5177',
-  'https://manager-vue.onrender.com'
+  'https://manager-vue.onrender.com',
+  'http://140.143.248.125:3030'
 ]
 
 // 默认头像

@@ -6,7 +6,12 @@
     <Calender :events="events" :clickDay="clickDay" :viewChange="viewChange" />
     <ClickButton :init="init" :clickDate="clickDate" @open-dialog="clickDateChange" />
     <StatisticsCard :statisticsData="statisticsData" />
-    <ChangeTime :visible="changeTimeVisible" :statisticsData="statisticsData" />
+    <ChangeTime
+      v-model:visible="changeTimeVisible"
+      :statisticsData="statisticsData"
+      :clickDate="clickDate"
+      @refresh="handleRefresh"
+    />
   </div>
 </template>
 
@@ -84,6 +89,15 @@ const clickDay = (date) => {
 
 const clickDateChange = () => {
   changeTimeVisible.value = true
+}
+
+// 刷新数据
+const handleRefresh = async () => {
+  await init(clickDate.value.format(formatMonth))
+  // 更新当前选中日期的数据
+  const dateString = formatDays(clickDate.value)
+  const records = getTodayEvents(dateString)
+  statisticsData.value = dealWithRecord(records)
 }
 
 // 处理记录
